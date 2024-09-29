@@ -1,0 +1,81 @@
+using System;
+using System.IO;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Threading;
+using System.Xml.Linq;
+using System.Runtime.Remoting.Messaging;
+
+namespace кс2
+{
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            Cart cart = new Cart();
+            cart.ShowProducts();
+
+            List<Product> products = new List<Product>();
+
+            for (int i = 0; i < cart.GetProductCount(); i++)
+            {
+                products.Add(cart.GetProductIndex(i));
+
+            }
+
+
+            products.RemoveAt(0);
+
+            Console.WriteLine();
+            cart.ShowProducts();
+
+        }
+
+    }
+
+    class Cart
+    {
+        private List<Product> _products = new List<Product>();
+        
+        public Cart() 
+        {
+            _products.Add(new Product("Apple"));
+            _products.Add(new Product("Banana"));
+            _products.Add(new Product("Orange"));
+            _products.Add(new Product("Cherry"));
+            
+
+        }
+
+        public void ShowProducts()
+        {
+            foreach (var product in _products)
+            {
+                Console.WriteLine(product.Name);
+            }
+        }
+
+        public Product GetProductIndex(int index)
+        {
+           return _products.ElementAt(index);
+        }
+
+        public int GetProductCount()
+        {
+            return _products.Count;
+        }
+    }
+
+    class Product
+    {
+        public string Name { get; private set; }
+
+        public Product(string name)
+        {
+            Name = name;
+        }
+
+    }
+}
